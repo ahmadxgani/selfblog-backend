@@ -1,13 +1,7 @@
-# ------------------------------------------------------
-# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
-# ------------------------------------------------------
-
 """Author model"""
 type Author {
-  bookmarks: [Bookmark!]!
   createdAt: DateTime!
   email: String!
-  id: Float!
   image: String
   name: String!
   posts: [Post!]!
@@ -16,11 +10,6 @@ type Author {
 }
 
 """Like Post Model"""
-type Bookmark {
-  bookmarkedPosts: [Post!]!
-  bookmarks: Float!
-}
-
 input CreateAuthorInput {
   email: String!
   name: String!
@@ -86,7 +75,6 @@ type LoginType {
 }
 
 type Mutation {
-  bookmarkPost(payload: GetPostByIdInput!): Bookmark!
   createAccount(payload: CreateAuthorInput!): Author!
   createPost(payload: CreatePostInput!): Post!
   createTag(payload: CreateTagInput!): Tag!
