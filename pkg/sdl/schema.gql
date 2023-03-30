@@ -6,7 +6,7 @@ type Account {
   image: String
   
   # posts: [Post]!
-  # createdAt: Time!
+  createdAt: String!
 }
 
 type Post {
