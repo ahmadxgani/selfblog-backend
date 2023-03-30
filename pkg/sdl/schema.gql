@@ -1,168 +1,38 @@
-"""Author model"""
-type Author {
-  createdAt: DateTime!
-  email: String!
+# scalar Time
+
+type Account {
+  username: String!
+  fullname: String!
   image: String
-  name: String!
-  posts: [Post!]!
-  updatedAt: DateTime!
-  username: String!
+  
+  # posts: [Post]!
+  # createdAt: Time!
 }
 
-"""Like Post Model"""
-input CreateAuthorInput {
-  email: String!
-  name: String!
-  password: String!
-  username: String!
-}
-
-input CreatePostInput {
-  content: String!
-  draft: Boolean
-  slug: String
-  tags: [String!]
-  title: String!
-}
-
-input CreateTagInput {
-  name: String!
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
-input DeleteTagInput {
-  id: Int!
-}
-
-input ForgotPasswordInput {
-  email: String!
-}
-
-input GetAuthorIdInput {
-  id: Int!
-}
-
-input GetByTagInput {
-  name: String!
-}
-
-input GetPostByIdInput {
-  id: Int!
-}
-
-input GetPostBySlugInput {
-  slug: String!
-}
-
-"""Like Post Model"""
-type Like {
-  likes: Int!
-}
-
-input LoginInput {
-  email: String!
-  password: String!
-}
-
-type LoginType {
-  email: String!
-  image: String
-  username: String!
-}
-
-type Mutation {
-  createAccount(payload: CreateAuthorInput!): Author!
-  createPost(payload: CreatePostInput!): Post!
-  createTag(payload: CreateTagInput!): Tag!
-  deleteAuthor(payload: GetAuthorIdInput!): ResponseType!
-  deletePost(payload: GetPostByIdInput!): ResponseType!
-  deleteTag(payload: DeleteTagInput!): ResponseType!
-  likePost(payload: GetPostByIdInput!): Like!
-  login(payload: LoginInput!): LoginType!
-  logout: ResponseType!
-  resetPassword(payload: ResetPasswordInput!): ResponseType!
-  unregisterUser(payload: VerifyEmailInput!): ResponseType!
-  updateAuthor(file: Upload, payload: UpdateAuthorInput!): Author!
-  updatePassword(payload: UpdatePasswordInput!): ResponseType!
-  updatePost(payload: UpdatePostInput!): Post!
-  updateTag(payload: UpdateTagInput!): Tag!
-  verifyEmail(payload: VerifyEmailInput!): ResponseType!
-}
-
-"""Post model"""
 type Post {
-  author: Author!
-  content: String!
-  createdAt: DateTime!
-  id: Int!
-  like: Like!
-  slug: String!
-  tags: [Tag!]!
   title: String!
-  updatedAt: DateTime!
+  content: String!
+  slug: String!
+  draft: Boolean!
+  likes: Int!
+
+  tags: [Tag]!
+  comments: [Comment]!
+  account: Account
+  # createdAt: Time!
+  # updatedAt: Time!
+}  
+
+type Tag {
+  name: String!
+  description: String!
+}
+
+type Comment {
+ content: String!
+ username: String!
 }
 
 type Query {
-  forgotPassword(payload: ForgotPasswordInput!): ResponseType!
-  getAuthorById(payload: GetAuthorIdInput!): Author!
-  getPost(payload: GetPostBySlugInput!): Post!
-  loggedInAuthor: Author!
-  showAllAuthor: [Author!]!
-  showAllPost: [Post!]!
-  showAllTag: [Tag!]!
-  showByTag(payload: GetByTagInput!): Tag!
-}
-
-input ResetPasswordInput {
-  authorID: Int!
-  newPassword: String!
-  token: String!
-}
-
-"""Return Response Type"""
-type ResponseType {
-  message: String!
-}
-
-"""Tag model"""
-type Tag {
-  id: Int!
-  name: String!
-  posts: [Post!]!
-}
-
-input UpdateAuthorInput {
-  id: Int!
-  name: String
-  username: String
-}
-
-input UpdatePasswordInput {
-  currentPassword: String!
-  newPassword: String!
-}
-
-input UpdatePostInput {
-  content: String
-  draft: Boolean
-  id: Int!
-  slug: String
-  tags: [String!]
-  title: String
-}
-
-input UpdateTagInput {
-  id: Int!
-  name: String!
-}
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
-
-input VerifyEmailInput {
-  code: String!
-}
+    account: Account
+  }
