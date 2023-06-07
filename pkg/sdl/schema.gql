@@ -4,7 +4,7 @@ type Account {
   username: String!
   fullname: String!
   image: String
-  
+
   # posts: [Post]!
   createdAt: String!
 }
@@ -21,7 +21,7 @@ type Post {
   account: Account
   # createdAt: Time!
   # updatedAt: Time!
-}  
+}
 
 type Tag {
   name: String!
@@ -29,10 +29,20 @@ type Tag {
 }
 
 type Comment {
- content: String!
- username: String!
+  content: String!
+  username: String!
 }
 
 type Query {
-    account: Account
-  }
+  account: Account!
+}
+
+type Mutation {
+  updateAccount(input: UpdateAccountInput!): Account!
+}
+
+input UpdateAccountInput {
+  username: String
+  fullname: String
+  image: String
+}
