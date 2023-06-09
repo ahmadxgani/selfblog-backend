@@ -1,6 +1,6 @@
 package app
 
-import "go-blog/app/database"
+import app "go-blog/app/database"
 
 type Account struct {
 	Username  string
@@ -28,14 +28,13 @@ type UpdateAccountInput struct {
 	Fullname *string
 }
 
-func UpdateAccount(args UpdateAccountInput) (*Account, error) {
+func UpdateAccount(args UpdateAccountInput) (int32, error) {
 	// var acc *Account = new(Account)
 
 	_, err = app.DB.Exec("UPDATE accounts SET username = 'testit' WHERE id=$1", 1)
-	updated, err := ReadAccount(1)
 	if err != nil {
-		return nil, err
+		return 0, err
 	}
 
-	return updated, nil
+	return 1, nil
 }

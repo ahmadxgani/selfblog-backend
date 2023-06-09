@@ -1,26 +1,27 @@
-# scalar Time
+schema {
+  query: Query
+  mutation: Mutation
+}
 
 type Account {
   username: String!
   fullname: String!
   image: String
-
   # posts: [Post]!
   createdAt: String!
 }
 
 type Post {
+  id: Int!
   title: String!
   content: String!
   slug: String!
   draft: Boolean!
   likes: Int!
-
-  tags: [Tag]!
-  comments: [Comment]!
-  account: Account
-  # createdAt: Time!
-  # updatedAt: Time!
+  # tags: [Tag]!
+  # comments: [Comment]!
+  createdAt: String!
+  updatedAt: String!
 }
 
 type Tag {
@@ -35,14 +36,38 @@ type Comment {
 
 type Query {
   account: Account!
+  getPost(id: Int!): Post!
+  showAllPost: [Post]!
 }
 
 type Mutation {
-  updateAccount(input: UpdateAccountInput!): Account!
+  updateAccount(input: UpdateAccountInput!): Int!
+  newPost(input: CreatePostInput!): Int!
+  removePost(id: Int!): Int!
+  updatePost(input: UpdatePostInput!): Int!
+}
+
+input CreatePostInput {
+  title: String!
+  content: String!
+  slug: String!
+  draft: Boolean!
 }
 
 input UpdateAccountInput {
   username: String
   fullname: String
   image: String
+}
+
+input UpdatePost {
+  title: String
+  content: String
+  slug: String
+  draft: Boolean
+}
+
+input UpdatePostInput {
+  id: Int!
+  data: UpdatePost!
 }

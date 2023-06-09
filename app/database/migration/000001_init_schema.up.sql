@@ -14,12 +14,10 @@ CREATE TABLE "posts" (
   "slug" varchar NOT NULL,
   "draft" boolean NOT NULL DEFAULT FALSE,
   "likes" smallint NOT NULL DEFAULT 0,
-  "account_id" smallint NOT NULL,
   "created_at" timestamptz NOT NULL DEFAULT now(),
   "updated_at" timestamptz NOT NULL DEFAULT now(),
 
-  CONSTRAINT "unique_title_slug" UNIQUE ("title", "slug"),
-  CONSTRAINT "fk_account" FOREIGN KEY ("account_id") REFERENCES "accounts" ("id")
+  CONSTRAINT "unique_title_slug" UNIQUE ("title", "slug")
 );
 
 CREATE TABLE "tags" (

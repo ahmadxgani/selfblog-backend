@@ -5,7 +5,7 @@ import (
 	model "go-blog/app/database/model"
 )
 
-func (r *Resolver) Account() (*model.Account, error) {
+func (r *QueryResolver) Account() (*model.Account, error) {
 	acc, err := model.ReadAccount(1)
 	if err != nil {
 		return &model.Account{}, err
@@ -13,14 +13,14 @@ func (r *Resolver) Account() (*model.Account, error) {
 	return acc, nil
 }
 
-func (r *Resolver) UpdateAccount(args struct{ Input model.UpdateAccountInput }) (*model.Account, error) {
+func (r *MutationResolver) UpdateAccount(args struct{ Input model.UpdateAccountInput }) (int32, error) {
 	if args.Input == (model.UpdateAccountInput{}) {
-		return &model.Account{}, fmt.Errorf("empty input, nothing was updated")
+		return 0, fmt.Errorf("empty input, nothing was updated")
 	}
 
 	updated, err := model.UpdateAccount(args.Input)
 	if err != nil {
-		return nil, err
+		return 0, err
 	}
 
 	return updated, nil
