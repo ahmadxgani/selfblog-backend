@@ -35,9 +35,10 @@ type Comment {
 }
 
 type Query {
-  account: Account!
+  account(id: Int!): Account!
   getPost(id: Int!): Post!
   showAllPost: [Post]!
+  authToken(input: LoginInput!): String!
 }
 
 type Mutation {
@@ -52,6 +53,11 @@ input CreatePostInput {
   content: String!
   slug: String!
   draft: Boolean!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
 }
 
 input UpdateAccountInput {

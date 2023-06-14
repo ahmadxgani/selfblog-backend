@@ -1,6 +1,8 @@
 package app
 
-import app "go-blog/app/database"
+import (
+	app "go-blog/app/database"
+)
 
 type Account struct {
 	Username  string
@@ -11,10 +13,17 @@ type Account struct {
 
 var err error
 
-func ReadAccount(id uint8) (*Account, error) {
-	var acc *Account = new(Account)
+func IsValid(email string, password string) bool {
+	var is_matched bool
+	app.DB.QueryRow("SELECT password = crypt($1, password) AS is_matched FROM accounts WHERE email=$2", password, email).Scan(&is_matched)
+	return is_matched
+}
 
-	err = app.DB.QueryRow("SELECT username, full_name, image, created_at FROM accounts WHERE id=$1", id).Scan(&acc.Username, &acc.Fullname, &acc.Image, &acc.CreatedAt)
+func ReadAccount(identifier interface{}) (*Account, error) {
+	var acc *Account = new(Account)
+	
+	err = app.DB.QueryRow("SELECT username, full_name, image, created_at FROM accounts WHERE id=$1", identifier).Scan(&acc.Username, &acc.Fullname, &acc.Image, &acc.CreatedAt)
+
 	if err != nil {
 		return nil, err
 	}

@@ -5,8 +5,8 @@ import (
 	model "go-blog/app/database/model"
 )
 
-func (r *QueryResolver) Account() (*model.Account, error) {
-	acc, err := model.ReadAccount(1)
+func (r *QueryResolver) Account(args struct{Id int32}) (*model.Account, error) {
+	acc, err := model.ReadAccount(args.Id)
 	if err != nil {
 		return &model.Account{}, err
 	}
